@@ -5,7 +5,7 @@ namespace App\Models;
 use PDO;
 use App\Models\DB;
 
-class Category
+class Bookmarks
 {
     private $db;
 
@@ -14,14 +14,14 @@ class Category
         $this->db = (new DB())->connect();
     }
 
-    public function getAllCategories()
+    public function getAllBookmark()
     {
-        $sql = "SELECT * FROM categories";
+        $sql = "SELECT * FROM bookmark";
         $stmt = $this->db->query($sql);
         return $stmt->fetchAll(PDO::FETCH_OBJ);
     }
 
-    public function addCategory($name, $description)
+    public function addBookmark($name, $description)
     {
         $sql = "INSERT INTO categories (name, description) VALUES (:name, :description)";
         $stmt = $this->db->prepare($sql);
