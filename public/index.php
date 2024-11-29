@@ -38,11 +38,22 @@ $app->get('/jobs', [JobController::class, 'getAllJobs']);
 $app->get('/job/{id}', [JobController::class, 'getJobById']);
 
 // Endpoint untuk users
-$app->get('/users', [UserController::class, 'getAllUsers']);
-$app->get('/user/{id}', [UserController::class, 'getUserById']);
-$app->post('/user', [UserController::class, 'createUser']); 
-$app->put('/user/{id}', [UserController::class, 'updateUser']); 
-$app->delete('/user/{id}', [UserController::class, 'deleteUser']); 
+$app->get('/users', function ($request, $response, $args) {
+    return (new UserController())->getAllUsers($request, $response, $args);
+});
+$app->get('/user/{id}', function ($request, $response, $args) {
+    return (new UserController())->getUserById($request, $response, $args);
+});
+$app->post('/user', function ($request, $response, $args) {
+    return (new UserController())->createUser($request, $response, $args);
+});
+$app->put('/user/{id}', function ($request, $response, $args) {
+    return (new UserController())->updateUser($request, $response, $args);
+});
+$app->delete('/user/{id}', function ($request, $response, $args) {
+    return (new UserController())->deleteUser($request, $response, $args);
+});
+
 
 // End Point untuk social media
 $app->get('/social-links', [SocialLinkController::class, 'getAllSocialLinks']);
