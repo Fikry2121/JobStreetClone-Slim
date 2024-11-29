@@ -3,53 +3,92 @@
 namespace App\Models;
 
 use PDO;
-use App\Models\DB;
+use App\Services\Model;
 
-class User
+class User extends Model
 {
-    private $db;
+    public $id;
+    public $email;
+    public $password;
+    public $user_location;
 
-    public function __construct()
+    private static function getConnection()
     {
-        $this->db = (new DB())->connect();
+        $model = new Model();
+        return $model->getDB();
     }
 
-    public function getAllUsers()
+    public static function validateUserData($data)
     {
-        $sql = "SELECT * FROM users";
-        $stmt = $this->db->query($sql);
-        return $stmt->fetchAll(PDO::FETCH_OBJ);
+        $errors = [];
+
+        if (empty($data['email']) || !filter_var($data['email'], FILTER_VALIDATE_EMAIL)) {
+            $errors[] = 'Email is required and must be valid.';
+        }
+
+        if (empty($data['password']) || strlen($data['password']) < 8) {
+            $errors[] = 'Password is required and must be at least 8 characters.';
+        }
+
+        if (empty($data['user_location'])) {
+            $errors[] = 'User location is required.';
+        }
+
+        return $errors;
     }
 
-    public function addUser($name, $email, $password, $role, $profile)
+    public static function createUser($data)
     {
-        $sql = "INSERT INTO users (name, email, password, role, profile) VALUES (:name, :email, :password, :role, :profile)";
-        $stmt = $this->db->prepare($sql);
-        $stmt->bindParam(':name', $name);
-        $stmt->bindParam(':email', $email);
-        $stmt->bindParam(':password', $password);
-        $stmt->bindParam(':role', $role);
-        $stmt->bindParam(':profile', $profile);
+        $errors = self::validateUserData($data);
+        if (!empty($errors)) {
+            throw new \Exception(implode(", ", $errors));
+        }
+
+        $db = self::getConnection();
+        $stmt = $db->prepare("INSERT INTO user (email, password, user_location) VALUES (:email, :password, :user_location)");
+        $stmt->bindParam(':email', $data['email']);
+        $stmt->bindParam(':password', password_hash($data['password'], PASSWORD_DEFAULT));
+        $stmt->bindParam(':user_location', $data['user_location']);
         return $stmt->execute();
     }
 
-    public function updateUser($id, $name, $email, $role, $profile)
+    public static function getAllUsers()
     {
-        $sql = "UPDATE users SET name = :name, email = :email, role = :role, profile = :profile WHERE user_id = :id";
-        $stmt = $this->db->prepare($sql);
-        $stmt->bindParam(':id', $id);
-        $stmt->bindParam(':name', $name);
-        $stmt->bindParam(':email', $email);
-        $stmt->bindParam(':role', $role);
-        $stmt->bindParam(':profile', $profile);
+        $db = self::getConnection();
+        $stmt = $db->query("SELECT * FROM user");
+        return $stmt->fetchAll();
+    }
+
+    public static function getUserById($id)
+    {
+        $db = self::getConnection();
+        $stmt = $db->prepare("SELECT * FROM user WHERE id = :id");
+        $stmt->bindParam(':id', $id, PDO::PARAM_INT);
+        $stmt->execute();
+        return $stmt->fetch();
+    }
+
+    public static function updateUser($id, $data)
+    {
+        $errors = self::validateUserData($data);
+        if (!empty($errors)) {
+            throw new \Exception(implode(", ", $errors));
+        }
+
+        $db = self::getConnection();
+        $stmt = $db->prepare("UPDATE user SET email = :email, password = :password, user_location = :user_location WHERE id = :id");
+        $stmt->bindParam(':id', $id, PDO::PARAM_INT);
+        $stmt->bindParam(':email', $data['email']);
+        $stmt->bindParam(':password', password_hash($data['password'], PASSWORD_DEFAULT));
+        $stmt->bindParam(':user_location', $data['user_location']);
         return $stmt->execute();
     }
 
-    public function deleteUser($id)
+    public static function deleteUser($id)
     {
-        $sql = "DELETE FROM users WHERE user_id = :id";
-        $stmt = $this->db->prepare($sql);
-        $stmt->bindParam(':id', $id);
+        $db = self::getConnection();
+        $stmt = $db->prepare("DELETE FROM user WHERE id = :id");
+        $stmt->bindParam(':id', $id, PDO::PARAM_INT);
         return $stmt->execute();
     }
 }

@@ -2,61 +2,55 @@
 
 namespace App\Controllers;
 
-use Psr\Http\Message\ResponseInterface as Response;
-use Psr\Http\Message\ServerRequestInterface as Request;
 use App\Models\User;
+use Exception;
 
 class UserController
 {
-    public function getAllUsers(Request $request, Response $response)
+    public function createUser($request)
     {
-        $user = new User();
-        $data = $user->getAllUsers();
-
-        $response->getBody()->write(json_encode($data));
-        return $response->withHeader('Content-Type', 'application/json');
+        try {
+            $data = json_decode($request->getBody(), true);
+            User::createUser($data);
+            return ['status' => 'success', 'message' => 'User created successfully.'];
+        } catch (Exception $e) {
+            return ['status' => 'error', 'message' => $e->getMessage()];
+        }
     }
 
-    public function addUser(Request $request, Response $response)
+    public function getAllUsers()
     {
-        $data = $request->getParsedBody();
-        $name = $data['name'];
-        $email = $data['email'];
-        $password = $data['password'];
-        $role = $data['role'];
-        $profile = $data['profile'];
-
-        $user = new User();
-        $result = $user->addUser($name, $email, $password, $role, $profile);
-
-        $response->getBody()->write(json_encode(['success' => $result]));
-        return $response->withHeader('Content-Type', 'application/json');
+        $users = User::getAllUsers();
+        return ['status' => 'success', 'data' => $users];
     }
 
-    public function updateUser(Request $request, Response $response, array $args)
+    public function getUserById($id)
     {
-        $id = $args['id'];
-        $data = $request->getParsedBody();
-        $name = $data['name'];
-        $email = $data['email'];
-        $role = $data['role'];
-        $profile = $data['profile'];
-
-        $user = new User();
-        $result = $user->updateUser($id, $name, $email, $role, $profile);
-
-        $response->getBody()->write(json_encode(['success' => $result]));
-        return $response->withHeader('Content-Type', 'application/json');
+        $user = User::getUserById($id);
+        if ($user) {
+            return ['status' => 'success', 'data' => $user];
+        } else {
+            return ['status' => 'error', 'message' => 'User not found.'];
+        }
     }
 
-    public function deleteUser(Request $request, Response $response, array $args)
+    public function updateUser($request, $id)
     {
-        $id = $args['id'];
+        try {
+            $data = json_decode($request->getBody(), true);
+            User::updateUser($id, $data);
+            return ['status' => 'success', 'message' => 'User updated successfully.'];
+        } catch (Exception $e) {
+            return ['status' => 'error', 'message' => $e->getMessage()];
+        }
+    }
 
-        $user = new User();
-        $result = $user->deleteUser($id);
-
-        $response->getBody()->write(json_encode(['success' => $result]));
-        return $response->withHeader('Content-Type', 'application/json');
+    public function deleteUser($id)
+    {
+        if (User::deleteUser($id)) {
+            return ['status' => 'success', 'message' => 'User deleted successfully.'];
+        } else {
+            return ['status' => 'error', 'message' => 'Failed to delete user.'];
+        }
     }
 }
