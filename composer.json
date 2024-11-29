@@ -1,16 +1,30 @@
 {
-    "name": "nursugianto1001/ppbo2024",
+    "name": "jobstreet/ppbo2024",
     "description": "pemrograman berorientasi objek",
     "type": "project",
     "license": "MIT",
     "authors": [
-    "fikry",
-    "ferry",
-    "fathurrochim",
-    "dina",
-    "gisel",
-    "sachi",
-    "alief"
+        {
+            "name": "fikry"
+        },
+        {
+            "name": "ferry"
+        },
+        {
+            "name": "fathurrochim"
+        },
+        {
+            "name": "dina"
+        },
+        {
+            "name": "gisel"
+        },
+        {
+            "name": "sachi"
+        },
+        {
+            "name": "alief"
+        }
     ],
 
     "require": {
