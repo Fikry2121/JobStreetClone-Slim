@@ -3,7 +3,7 @@
 use Slim\Factory\AppFactory;
 use App\Controllers\UserController;  // Ubah dari src\Models\User menjadi App\Models\User
 
-use App\Controllers\JobPostController;
+use App\Controllers\JobController;
 use App\Controllers\PageController;
 use Selective\BasePath\BasePathMiddleware;
 use App\Controllers\SocialLinkController;
@@ -32,11 +32,9 @@ $app->post('/users/add', [UserController::class, 'createUser']);
 $app->put('/users/update/{id}', [UserController::class, 'updateUser']);
 $app->delete('/users/delete/{id}', [UserController::class, 'deleteUser']);
 
-$app->get('/Job_post', [JobPostController::class, 'getAllJobs']);
-$app->get('/Job_post/{id}', [JobPostController::class, 'getJobById']);
-$app->post('/Job_post/add', [JobPostController::class, 'createJob']);
-$app->put('/Job_post/update/{id}', [JobPostController::class, 'updateJob']);
-$app->delete('/Job_post/delete/{id}', [JobPostController::class, 'deleteJob']);
+$app->get('/job', [JobController::class, 'getAllJobs']);
+$app->get('/job/{id}', [JobController::class, 'getJobById']);
+
 
 $app->get('/pages', [PageController::class, 'getAllPages']);
 $app->get('/pages/{id}', [PageController::class, 'getPageById']);
