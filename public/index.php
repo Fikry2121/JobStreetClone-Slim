@@ -29,19 +29,12 @@ $app->addErrorMiddleware(true, true, true);
 
 
 
-$app->get('/', function ($request, $response, $args) {
-    $data = ['message' => 'Testing aja boskuh'];
-    $response->getBody()->write(json_encode($data));
-    return $response->withHeader('Content-Type', 'application/json');
-});
-
-$app->get('/jobs', [JobController::class, 'getAllJobs']);
+$app->get('/job', [JobController::class, 'getAllJobs']);
 $app->get('/job/{id}', [JobController::class, 'getJobById']);
 
 
-
 $app->get('/users', [UserController::class, 'getAllUsers']);
-$app->get('/user/{id}', [UserController::class, 'getUserById']);
+$app->get('/users/{id}', [UserController::class, 'getUserById']);
 $app->post('/users', [UserController::class, 'createUser']);
 $app->put('/users/update/{id}', [UserController::class, 'updateUser']);
 $app->delete('/users/delete/{id}', [UserController::class, 'deleteUser']);

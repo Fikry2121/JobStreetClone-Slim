@@ -2,76 +2,55 @@
 
 namespace App\Controllers;
 
-use Psr\Http\Message\ResponseInterface;
-use Psr\Http\Message\ServerRequestInterface;
-use App\Model\User as UserModel;
-use App\Services\Model as DatabaseService;
+use App\Models\User;
+use Exception;
 
 class UserController
 {
-    private $userModel;
-
-    public function __construct()
+    public function createUser($request)
     {
-        // Menggunakan DatabaseService untuk mendapatkan koneksi database
-        $dbService = new DatabaseService();
-        $this->userModel = new UserModel($dbService->getDB());
-    }
-
-    public function getAllUsers(ServerRequestInterface $request, ResponseInterface $response, $args)
-    {
-        $users = $this->userModel->getAllUsers();
-        $response->getBody()->write(json_encode($users));
-        return $response->withHeader('Content-Type', 'application/json');
-    }
-
-    public function getUserById(ServerRequestInterface $request, ResponseInterface $response, $args)
-    {
-        $id = (int)$args['id'];
-        $user = $this->userModel->getUserById($id);
-
-        if (!$user) {
-            return $response->withStatus(404);
+        try {
+            $data = json_decode($request->getBody(), true);
+            User::createUser($data);
+            return ['status' => 'success', 'message' => 'User created successfully.'];
+        } catch (Exception $e) {
+            return ['status' => 'error', 'message' => $e->getMessage()];
         }
-
-        $response->getBody()->write(json_encode($user));
-        return $response->withHeader('Content-Type', 'application/json');
     }
 
-    public function createUser(ServerRequestInterface $request, ResponseInterface $response, $args)
+    public function getAllUsers()
     {
-        $data = json_decode($request->getBody()->getContents(), true);
-        $newUser = $this->userModel->createUser($data);
-
-        $response->getBody()->write(json_encode($newUser));
-        return $response->withStatus(201)->withHeader('Content-Type', 'application/json');
+        $users = User::getAllUsers();
+        return ['status' => 'success', 'data' => $users];
     }
 
-    public function updateUser(ServerRequestInterface $request, ResponseInterface $response, $args)
+    public function getUserById($id)
     {
-        $id = (int)$args['id'];
-        $data = json_decode($request->getBody()->getContents(), true);
-        $user = $this->userModel->getUserById($id);
-
-        if (!$user) {
-            return $response->withStatus(404);
+        $user = User::getUserById($id);
+        if ($user) {
+            return ['status' => 'success', 'data' => $user];
+        } else {
+            return ['status' => 'error', 'message' => 'User not found.'];
         }
-
-        $updatedUser = $this->userModel->updateUser($id, $data);
-        $response->getBody()->write(json_encode($updatedUser));
-        return $response->withHeader('Content-Type', 'application/json');
     }
 
-    public function deleteUser(ServerRequestInterface $request, ResponseInterface $response, $args)
+    public function updateUser($request, $id)
     {
-        $id = (int)$args['id'];
-        $user = $this->userModel->getUserById($id);
-
-        if (!$user) {
-            return $response->withStatus(404);
+        try {
+            $data = json_decode($request->getBody(), true);
+            User::updateUser($id, $data);
+            return ['status' => 'success', 'message' => 'User updated successfully.'];
+        } catch (Exception $e) {
+            return ['status' => 'error', 'message' => $e->getMessage()];
         }
+    }
 
-        $this->userModel->deleteUser($id);
-        return $response->withStatus(204); // No Content
+    public function deleteUser($id)
+    {
+        if (User::deleteUser($id)) {
+            return ['status' => 'success', 'message' => 'User deleted successfully.'];
+        } else {
+            return ['status' => 'error', 'message' => 'Failed to delete user.'];
+        }
     }
 }

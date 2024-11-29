@@ -1,15 +1,9 @@
 <?php return array(
     'root' => array(
         'name' => 'nursugianto1001/ppbo2024',
-<<<<<<< HEAD
-        'pretty_version' => 'dev-main',
-        'version' => 'dev-main',
-        'reference' => 'ddb15f4cdb935bee4a0bdef09e746d8307523015',
-=======
         'pretty_version' => '1.0.0+no-version-set',
         'version' => '1.0.0.0',
         'reference' => null,
->>>>>>> a0b8507220f5b56b27d9b34d308e77e145c48310
         'type' => 'project',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -53,15 +47,9 @@
             'dev_requirement' => false,
         ),
         'nursugianto1001/ppbo2024' => array(
-<<<<<<< HEAD
-            'pretty_version' => 'dev-main',
-            'version' => 'dev-main',
-            'reference' => 'ddb15f4cdb935bee4a0bdef09e746d8307523015',
-=======
             'pretty_version' => '1.0.0+no-version-set',
             'version' => '1.0.0.0',
             'reference' => null,
->>>>>>> a0b8507220f5b56b27d9b34d308e77e145c48310
             'type' => 'project',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
@@ -129,13 +117,8 @@
             'dev_requirement' => false,
             'provided' => array(
                 0 => '1.0',
-<<<<<<< HEAD
-                1 => '^1.0 || ^2.0',
-                2 => '^1.1 || ^2.0',
-=======
                 1 => '^1.1 || ^2.0',
                 2 => '^1.0 || ^2.0',
->>>>>>> a0b8507220f5b56b27d9b34d308e77e145c48310
             ),
         ),
         'psr/http-server-handler' => array(
