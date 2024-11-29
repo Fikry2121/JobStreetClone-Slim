@@ -10,7 +10,7 @@ use App\Controllers\SocialLinkController;
 use App\Controllers\ProfileController;
 use App\Controllers\LoginController;
 use app\Controllers\CareerResourceController;
-use App\Controllers\CompanyReviewsController;
+use App\Controllers\ApplicationsController;
 
 require __DIR__ . '/../vendor/autoload.php';
 
@@ -65,11 +65,9 @@ $app->post('/resources', [CareerResourceController::class, 'createResource']);
 $app->put('/resources/{id}', [CareerResourceController::class, 'updateResource']);
 $app->delete('/resources/{id}', [CareerResourceController::class, 'deleteResource']);
 
-$app->get('/reviews', [CompanyReviewsController::class, 'getAllReviews']);
-$app->get('/reviews/{id}', [CompanyReviewsController::class, 'getReviewById']);
-$app->post('/reviews', [CompanyReviewsController::class, 'createReview']);
-$app->put('/reviews/{id}', [CompanyReviewsController::class, 'updateReview']);
-$app->delete('/reviews/{id}', [CompanyReviewsController::class, 'deleteReview']);
+$app->post('/applications/apply', [ApplicationsController::class, 'applyForJob']);
+$app->get('/applications/{id}/status', [ApplicationsController::class, 'trackApplicationStatus']);
+$app->get('/applications/user/{id}', [ApplicationsController::class, 'getApplicationsByUser']);
 
 // Jalankan aplikasi Slim
 $app->run();
