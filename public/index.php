@@ -28,24 +28,17 @@ $app->add(new BasePathMiddleware($app));
 // Error Middleware
 $app->addErrorMiddleware(true, true, true);
 
-$app->get('/', [LoginController::class, 'login']);
-$app->get('/users', [UserController::class, 'getAllUsers']);
-$app->get('/users/{id}', [UserController::class, 'getUserById']);
-$app->post('/users/add', [UserController::class, 'createUser']);
-$app->put('/users/update/{id}', [UserController::class, 'updateUser']);
-$app->delete('/users/delete/{id}', [UserController::class, 'deleteUser']);
+
 
 $app->get('/job', [JobController::class, 'getAllJobs']);
 $app->get('/job/{id}', [JobController::class, 'getJobById']);
 
 
-$app->get('/pages', [PageController::class, 'getAllPages']);
-$app->get('/pages/{id}', [PageController::class, 'getPageById']);
-$app->post('/pages/add', [PageController::class, 'createPage']);
-$app->put('/pages/update/{id}', [PageController::class, 'updatePage']);
-$app->delete('/pages/delete/{id}', [PageController::class, 'deletePage']);
-$app->get('/pages/{id}/blocks', [PageController::class, 'getBlocksByPage']);
-$app->get('/pages/{id}/user', [PageController::class, 'getUserByPage']);
+$app->get('/users', [UserController::class, 'getAllUsers']);
+$app->get('/users/{id}', [UserController::class, 'getUserById']);
+$app->post('/users', [UserController::class, 'createUser']);
+$app->put('/users/update/{id}', [UserController::class, 'updateUser']);
+$app->delete('/users/delete/{id}', [UserController::class, 'deleteUser']);
 
 // Rute untuk mendapatkan semua social link
 $app->get('/social-links', [SocialLinkController::class, 'getAllSocialLinks']);
