@@ -1,15 +1,26 @@
 <?php
 
 use Slim\Factory\AppFactory;
+<<<<<<< HEAD
 use App\Controllers\UserController;
+=======
+use App\Controllers\UserController;  // Ubah dari src\Models\User menjadi App\Models\User
+
+>>>>>>> a0b8507220f5b56b27d9b34d308e77e145c48310
 use App\Controllers\JobController;
 use App\Controllers\PageController;
 use Selective\BasePath\BasePathMiddleware;
 use App\Controllers\SocialLinkController;
 use App\Controllers\ProfileController;
 use App\Controllers\LoginController;
+<<<<<<< HEAD
 use App\Controllers\CareerResourceController;
 use App\Controllers\ApplicationsController;
+=======
+use app\Controllers\CareerResourceController;
+use App\Controllers\ApplicationsController;
+use App\Controllers\BookmarkController;
+>>>>>>> a0b8507220f5b56b27d9b34d308e77e145c48310
 
 require __DIR__ . '/../vendor/autoload.php';
 

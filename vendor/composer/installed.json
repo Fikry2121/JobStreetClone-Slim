@@ -225,7 +225,11 @@
                     "module": "Laminas\\Diactoros"
                 }
             },
+<<<<<<< HEAD
             "installation-source": "source",
+=======
+            "installation-source": "dist",
+>>>>>>> a0b8507220f5b56b27d9b34d308e77e145c48310
             "autoload": {
                 "files": [
                     "src/functions/create_uploaded_file.php",
@@ -890,7 +894,11 @@
             },
             "time": "2023-09-09T13:01:07+00:00",
             "type": "library",
+<<<<<<< HEAD
             "installation-source": "source",
+=======
+            "installation-source": "dist",
+>>>>>>> a0b8507220f5b56b27d9b34d308e77e145c48310
             "autoload": {
                 "psr-4": {
                     "Selective\\BasePath\\": "src/"
