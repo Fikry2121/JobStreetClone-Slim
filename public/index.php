@@ -1,7 +1,7 @@
 <?php
 
 use Slim\Factory\AppFactory;
-use App\Controllers\UserController;  // Ubah dari src\Models\User menjadi App\Models\User
+use App\Controllers\UserController;
 
 use App\Controllers\JobController;
 use App\Controllers\PageController;
@@ -33,11 +33,11 @@ $app->get('/job', [JobController::class, 'getAllJobs']);
 $app->get('/job/{id}', [JobController::class, 'getJobById']);
 
 
+$app->post('/users', [UserController::class, 'createUser']);
 $app->get('/users', [UserController::class, 'getAllUsers']);
 $app->get('/users/{id}', [UserController::class, 'getUserById']);
-$app->post('/users', [UserController::class, 'createUser']);
-$app->put('/users/update/{id}', [UserController::class, 'updateUser']);
-$app->delete('/users/delete/{id}', [UserController::class, 'deleteUser']);
+$app->put('/users/{id}', [UserController::class, 'updateUser']);
+$app->delete('/users/{id}', [UserController::class, 'deleteUser']);
 
 // Rute untuk mendapatkan semua social link
 $app->get('/social-links', [SocialLinkController::class, 'getAllSocialLinks']);

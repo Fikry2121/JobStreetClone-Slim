@@ -10,7 +10,7 @@ class User extends Model
     public $id;
     public $email;
     public $password;
-    public $user_location;
+    public $phone;
 
     private static function getConnection()
     {
@@ -30,8 +30,8 @@ class User extends Model
             $errors[] = 'Password is required and must be at least 8 characters.';
         }
 
-        if (empty($data['user_location'])) {
-            $errors[] = 'User location is required.';
+        if (empty($data['phone'])) {
+            $errors[] = 'Phone number is required.';
         }
 
         return $errors;
@@ -45,10 +45,10 @@ class User extends Model
         }
 
         $db = self::getConnection();
-        $stmt = $db->prepare("INSERT INTO user (email, password, user_location) VALUES (:email, :password, :user_location)");
+        $stmt = $db->prepare("INSERT INTO user (email, password, phone) VALUES (:email, :password, :phone)"); // Updated SQL
         $stmt->bindParam(':email', $data['email']);
         $stmt->bindParam(':password', password_hash($data['password'], PASSWORD_DEFAULT));
-        $stmt->bindParam(':user_location', $data['user_location']);
+        $stmt->bindParam(':phone', $data['phone']); // Updated binding
         return $stmt->execute();
     }
 
@@ -76,11 +76,11 @@ class User extends Model
         }
 
         $db = self::getConnection();
-        $stmt = $db->prepare("UPDATE user SET email = :email, password = :password, user_location = :user_location WHERE id = :id");
+        $stmt = $db->prepare("UPDATE user SET email = :email, password = :password, phone = :phone WHERE id = :id");
         $stmt->bindParam(':id', $id, PDO::PARAM_INT);
         $stmt->bindParam(':email', $data['email']);
         $stmt->bindParam(':password', password_hash($data['password'], PASSWORD_DEFAULT));
-        $stmt->bindParam(':user_location', $data['user_location']);
+        $stmt->bindParam(':phone', $data['phone']);
         return $stmt->execute();
     }
 

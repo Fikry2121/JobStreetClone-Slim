@@ -12,7 +12,7 @@ class UserController
         try {
             $data = json_decode($request->getBody(), true);
             User::createUser($data);
-            return ['status' => 'success', 'message' => 'User created successfully.'];
+            return ['status' => 'success', 'message' => 'User created successfull.'];
         } catch (Exception $e) {
             return ['status' => 'error', 'message' => $e->getMessage()];
         }
