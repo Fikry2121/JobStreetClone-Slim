@@ -3,124 +3,92 @@
 namespace App\Models;
 
 use PDO;
-use PDOException;
 use App\Services\Model;
 
 class User extends Model
 {
-    // Properti untuk data user 
-    public $id_user;
-    public $username;
+    public $id;
     public $email;
     public $password;
-    public $phone;
+    public $user_location;
 
-
-    // Mendapatkan koneksi ke database
-    public static function getConnection()
+    private static function getConnection()
     {
         $model = new Model();
         return $model->getDB();
     }
 
-    // Method untuk mengambil semua data user
-    public static function all()
+    public static function validateUserData($data)
     {
-        $model = new Model();
-        $db = $model->getDB();
+        $errors = [];
+
+        if (empty($data['email']) || !filter_var($data['email'], FILTER_VALIDATE_EMAIL)) {
+            $errors[] = 'Email is required and must be valid.';
+        }
+
+        if (empty($data['password']) || strlen($data['password']) < 8) {
+            $errors[] = 'Password is required and must be at least 8 characters.';
+        }
+
+        if (empty($data['user_location'])) {
+            $errors[] = 'User location is required.';
+        }
+
+        return $errors;
+    }
+
+    public static function createUser($data)
+    {
+        $errors = self::validateUserData($data);
+        if (!empty($errors)) {
+            throw new \Exception(implode(", ", $errors));
+        }
+
+        $db = self::getConnection();
+        $stmt = $db->prepare("INSERT INTO user (email, password, user_location) VALUES (:email, :password, :user_location)");
+        $stmt->bindParam(':email', $data['email']);
+        $stmt->bindParam(':password', password_hash($data['password'], PASSWORD_DEFAULT));
+        $stmt->bindParam(':user_location', $data['user_location']);
+        return $stmt->execute();
+    }
+
+    public static function getAllUsers()
+    {
+        $db = self::getConnection();
         $stmt = $db->query("SELECT * FROM user");
-        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        return $stmt->fetchAll();
     }
 
-    // Method untuk menemukan user berdasarkan id
-    public static function find($id)
+    public static function getUserById($id)
     {
-        $model = new Model();
-        $db = $model->getDB();
-        $stmt = $db->prepare("SELECT * FROM user WHERE id_user = :id");
-        $stmt->execute(['id' => $id]);
-
-        // Ubah fetch mode menjadi FETCH_OBJ
-        $userData = $stmt->fetch(PDO::FETCH_ASSOC);
-
-        // Return null jika tidak ditemukan
-        if (!$userData) {
-            return null;
-        }
-
-        // Buat instance baru dari User dengan data yang ditemukan
-        $user = new self();
-        foreach ($userData as $key => $value) {
-            if (property_exists($user, $key))
-                $user->$key = $value;
-        }
-        return $user;
+        $db = self::getConnection();
+        $stmt = $db->prepare("SELECT * FROM user WHERE id = :id");
+        $stmt->bindParam(':id', $id, PDO::PARAM_INT);
+        $stmt->execute();
+        return $stmt->fetch();
     }
 
-    // Method untuk menyimpan user ke database
-    public function save()
+    public static function updateUser($id, $data)
     {
-        $model = new Model();
-        $db = $model->getDB();
-
-        if ($this->id_user) {
-            // Update user
-            $stmt = $db->prepare("UPDATE user SET username = :username, name = :name, email = :email, phone = :phone,  id_user = :id");
-            $stmt->execute([
-                'username' => $this->username,
-                'email' => $this->email,
-                'phone' => $this->phone,
-                'id' => $this->id_user
-            ]);
-        } else {
-            // Insert user baru
-            $stmt = $db->prepare("INSERT INTO user (username, name, email, phone, password) VALUES (:username, :name, :email, :phone, :password, )");
-            $stmt->execute([
-                'username' => $this->username,
-                'email' => $this->email,
-                'phone' => $this->phone,
-                'password' => $this->password,
-
-            ]);
-            $this->id_user = $db->lastInsertId();
+        $errors = self::validateUserData($data);
+        if (!empty($errors)) {
+            throw new \Exception(implode(", ", $errors));
         }
+
+        $db = self::getConnection();
+        $stmt = $db->prepare("UPDATE user SET email = :email, password = :password, user_location = :user_location WHERE id = :id");
+        $stmt->bindParam(':id', $id, PDO::PARAM_INT);
+        $stmt->bindParam(':email', $data['email']);
+        $stmt->bindParam(':password', password_hash($data['password'], PASSWORD_DEFAULT));
+        $stmt->bindParam(':user_location', $data['user_location']);
+        return $stmt->execute();
     }
 
-    // Method untuk menghapus user
-    public function delete()
+    public static function deleteUser($id)
     {
-        try {
-            $model = new Model();
-            $db = $model->getDB();
-            $stmt = $db->prepare("DELETE FROM user WHERE id_user = :id");
-            $stmt->execute(['id' => $this->id_user]);
-            return true;
-        } catch (\PDOException $e) {
-            throw new \Exception("Gagal menghapus user: " . $e->getMessage());
-        }
-    }
-
-    // Convert ke array
-    public function toArray()
-    {
-        return [
-            'id_user' => $this->id_user,
-            'username' => $this->username,
-            'email' => $this->email,
-            'phone' => $this->phone,
-
-        ];
-    }
-
-    // Constructor
-    public function __construct($data = [])
-    {
-        if (!empty($data)) {
-            $this->id_user = $data['id_user'] ?? null;
-            $this->username = $data['username'] ?? null;
-            $this->email = $data['email'] ?? null;
-            $this->phone = $data['phone'] ?? null;
-            $this->password = $data['password'] ?? null;
-        }
+        $db = self::getConnection();
+        $stmt = $db->prepare("DELETE FROM user WHERE id = :id");
+        $stmt->bindParam(':id', $id, PDO::PARAM_INT);
+        return $stmt->execute();
     }
 }
