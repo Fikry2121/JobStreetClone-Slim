@@ -3,7 +3,16 @@
     "description": "pemrograman berorientasi objek",
     "type": "project",
     "license": "MIT",
-    "authors": [],
+    "authors": [
+    "fikry",
+    "ferry",
+    "fathurrochim",
+    "dina",
+    "gisel",
+    "sachi",
+    "alief"
+    ],
+
     "require": {
         "slim/slim": "^4.0",
         "slim/psr7": "^1.6",
