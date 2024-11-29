@@ -3,12 +3,7 @@
     "description": "pemrograman berorientasi objek",
     "type": "project",
     "license": "MIT",
-    "authors": [
-    {
-        "name": "nursugianto1001",
-        "email": "h1101231053@student.untan.ac.id"
-    }
-    ],
+    "authors": [],
     "require": {
         "slim/slim": "^4.0",
         "slim/psr7": "^1.6",
