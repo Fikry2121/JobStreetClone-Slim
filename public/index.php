@@ -11,6 +11,7 @@ use App\Controllers\ProfileController;
 use App\Controllers\LoginController;
 use app\Controllers\CareerResourceController;
 use App\Controllers\ApplicationsController;
+use App\Controllers\BookmarkController;
 
 require __DIR__ . '/../vendor/autoload.php';
 
@@ -68,6 +69,11 @@ $app->delete('/resources/{id}', [CareerResourceController::class, 'deleteResourc
 $app->post('/applications/apply', [ApplicationsController::class, 'applyForJob']);
 $app->get('/applications/{id}/status', [ApplicationsController::class, 'trackApplicationStatus']);
 $app->get('/applications/user/{id}', [ApplicationsController::class, 'getApplicationsByUser']);
+
+$app->post('/bookmarks/add', [BookmarkController::class, 'addBookmark']);
+$app->delete('/bookmarks/delete/{id}', [BookmarkController::class, 'removeBookmark']);
+$app->get('/bookmarks/user/{id}', [BookmarkController::class, 'viewBookmark']);
+
 
 // Jalankan aplikasi Slim
 $app->run();
