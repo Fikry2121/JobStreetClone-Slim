@@ -65,11 +65,11 @@ $app->post('/resources', [CareerResourceController::class, 'createResource']);
 $app->put('/resources/{id}', [CareerResourceController::class, 'updateResource']);
 $app->delete('/resources/{id}', [CareerResourceController::class, 'deleteResource']);
 
-$app->get('/application', \App\Controllers\ApplicationController::class . ':getAllApplications');
-$app->get('/application/{id}', \App\Controllers\ApplicationController::class . ':getApplicationById');
-$app->post('/application', \App\Controllers\ApplicationController::class . ':createApplication');
-$app->put('/application/{id}', \App\Controllers\ApplicationController::class . ':updateApplicationStatus');
-$app->delete('/application/{id}', \App\Controllers\ApplicationController::class . ':deleteApplication');
+$app->get('/application', [ApplicationController::class . ':getAllApplications']);
+$app->get('/application/{id}', [ApplicationController::class . ':getApplicationById']);
+$app->post('/application', [ApplicationController::class . ':createApplication']);
+$app->put('/application/{id}', [ApplicationController::class . ':updateApplicationStatus']);
+$app->delete('/application/{id}', [ApplicationController::class . ':deleteApplication']);
 
 // Jalankan aplikasi Slim
 $app->run();
