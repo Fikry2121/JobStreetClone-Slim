@@ -1,8 +1,8 @@
 <?php
 
 use Slim\Factory\AppFactory;
-use App\Controllers\UserController;
 
+use App\Controllers\UserController;
 use App\Controllers\JobController;
 use App\Controllers\CompanyReviewController;
 use Selective\BasePath\BasePathMiddleware;
