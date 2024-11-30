@@ -7,8 +7,7 @@ use App\Controllers\JobController;
 use App\Controllers\CompanyReviewController;
 use Selective\BasePath\BasePathMiddleware;
 use App\Controllers\ProfileController;
-use App\Controllers\CompanyController;
-
+use App\Controllers\NotificationController;
 use App\Controllers\ApplicationController;
 
 require __DIR__ . '/../vendor/autoload.php';
@@ -27,6 +26,10 @@ $app->add(new BasePathMiddleware($app));
 $app->addErrorMiddleware(true, true, true);
 
 
+$app->get('/notifications', [NotificationController::class, 'getAllNotifications']);
+$app->get('/notifications/{id}', [NotificationController::class, 'getNotificationById']);
+$app->post('/notifications', [NotificationController::class, 'createNotification']);
+$app->delete('/notifications/{id}', [NotificationController::class, 'deleteNotification']);
 
 
 $app->get('/job', [JobController::class, 'getAllJobs']);
