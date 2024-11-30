@@ -4,7 +4,7 @@ use Slim\Factory\AppFactory;
 use App\Controllers\UserController;
 
 use App\Controllers\JobController;
-use App\Controllers\PageController;
+use App\Controllers\CompanyReviewController;
 use Selective\BasePath\BasePathMiddleware;
 use App\Controllers\SocialLinkController;
 use App\Controllers\ProfileController;
@@ -29,8 +29,16 @@ $app->addErrorMiddleware(true, true, true);
 
 
 
+
 $app->get('/job', [JobController::class, 'getAllJobs']);
 $app->get('/job/{id}', [JobController::class, 'getJobById']);
+
+// Routes untuk CompanyReview CRUD
+$app->post('/company-review', [CompanyReviewController::class, 'createReview']); // Tambah ulasan baru
+$app->get('/company-review/company/{id_company}', [CompanyReviewController::class, 'getReviewsByCompany']); // Ambil semua ulasan berdasarkan ID perusahaan
+$app->get('/company-review/{id_review}', [CompanyReviewController::class, 'getReviewById']); // Ambil ulasan berdasarkan ID ulasan
+$app->put('/company-review/{id_review}', [CompanyReviewController::class, 'updateReview']); // Perbarui ulasan berdasarkan ID ulasan
+$app->delete('/company-review/{id_review}', [CompanyReviewController::class, 'deleteReview']); // Hapus ulasan berdasarkan ID ulasan
 
 
 $app->post('/users', [UserController::class, 'createUser']);

@@ -28,11 +28,12 @@ class CompanyReview extends Model
     {
         $db = self::getConnection();
         $stmt = $db->prepare("
-            INSERT INTO company_review (id_user, id_company, rating, review_text, job_position, employment_status, created_at, updated_at)
-            VALUES (:id_user, :id_company, :rating, :review_text, :job_position, :employment_status,  :created_at, :updated_at
-        ");
+        INSERT INTO company_review (id_user, id_company, rating, review_text, job_position, employment_status, created_at)
+        VALUES (:id_user, :id_company, :rating, :review_text, :job_position, :employment_status, :created_at)
+    ");
         return $stmt->execute($data);
     }
+
 
     // Mengambil semua ulasan berdasarkan ID perusahaan
     public static function getReviewsByCompany($id_company)
