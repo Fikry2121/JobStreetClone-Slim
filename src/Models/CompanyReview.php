@@ -35,7 +35,7 @@ class CompanyReview extends Model
     }
 
 
-    // Mengambil semua ulasan berdasarkan ID perusahaan
+    // Mengambil semua ulasan berdasarkan ID perusahaa
     public static function getReviewsByCompany($id_company)
     {
         $db = self::getConnection();

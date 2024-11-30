@@ -23,7 +23,7 @@ class CompanyReviewController
             'created_at' => $data['created_at']
 
         ]);
-        //s
+        //d
 
         if ($result) {
             $response->getBody()->write(json_encode(['status' => 'success', 'message' => 'Review created successfully']));
