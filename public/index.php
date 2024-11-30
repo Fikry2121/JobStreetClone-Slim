@@ -10,6 +10,8 @@ use App\Controllers\ProfileController;
 use App\Controllers\NotificationController;
 use App\Controllers\ApplicationController;
 use App\Controllers\BookmarkController;
+use App\Controllers\SearchCompanyController;
+
 
 require __DIR__ . '/../vendor/autoload.php';
 
@@ -32,6 +34,7 @@ $app->get('/notifications/{id}', [NotificationController::class, 'getNotificatio
 $app->post('/notifications', [NotificationController::class, 'createNotification']);
 $app->delete('/notifications/{id}', [NotificationController::class, 'deleteNotification']);
 
+$app->get('/company/search', [SearchCompanyController::class, 'searchCompany']);
 
 $app->get('/job', [JobController::class, 'getAllJobs']);
 $app->get('/job/{id}', [JobController::class, 'getJobById']);
