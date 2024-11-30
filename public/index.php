@@ -6,7 +6,6 @@ use App\Controllers\UserController;
 use App\Controllers\JobController;
 use App\Controllers\CompanyReviewController;
 use Selective\BasePath\BasePathMiddleware;
-use App\Controllers\SocialLinkController;
 use App\Controllers\ProfileController;
 use App\Controllers\CompanyController;
 
@@ -33,7 +32,7 @@ $app->addErrorMiddleware(true, true, true);
 $app->get('/job', [JobController::class, 'getAllJobs']);
 $app->get('/job/{id}', [JobController::class, 'getJobById']);
 
-// Routes untuk CompanyRevieCRUDa
+// Routes untuk CompanyRevieCRUD
 $app->post('/company-review', [CompanyReviewController::class, 'createReview']); // Tambah ulasan baru
 $app->get('/company-review/company/{id_company}', [CompanyReviewController::class, 'getReviewsByCompany']); // Ambil semua ulasan berdasarkan ID perusahaan
 $app->get('/company-review/{id_review}', [CompanyReviewController::class, 'getReviewById']); // Ambil ulasan berdasarkan ID ulasan
@@ -41,15 +40,11 @@ $app->put('/company-review/{id_review}', [CompanyReviewController::class, 'updat
 $app->delete('/company-review/{id_review}', [CompanyReviewController::class, 'deleteReview']); // Hapus ulasan berdasarkan ID ulasan
 
 
-$app->post('/users/add', [UserController::class, 'createUser']);
+$app->get('/users/{id}', [UserController::class, 'getUser']);
 $app->get('/users', [UserController::class, 'getAllUsers']);
-$app->get('/users/{id}', [UserController::class, 'getUserById']);
+$app->post('/users', [UserController::class, 'createUser']);
 $app->put('/users/{id}', [UserController::class, 'updateUser']);
 $app->delete('/users/{id}', [UserController::class, 'deleteUser']);
-
-$app->get('/companies/search', [CompanyController::class, 'searchCompanyByName']);
-
-
 
 $app->get('/profiles', [ProfileController::class, 'getAllProfiles']);
 $app->get('/profiles/{id}', [ProfileController::class, 'getProfileById']);

@@ -1,16 +1,17 @@
 <?php
-
 namespace App\Models;
 
 use PDO;
 use App\Services\Model;
 
-class User extends Model
+class User
 {
-    public $id_user;
-    public $email;
-    public $password;
-    public $phone;
+    private $db;
+
+    public function __construct()
+    {
+        $this->db = self::getConnection();
+    }
 
     private static function getConnection()
     {
@@ -18,77 +19,69 @@ class User extends Model
         return $model->getDB();
     }
 
-    public static function validateUserData($data)
+    public function getUserById($id)
     {
-        $errors = [];
-
-        if (empty($data['email']) || !filter_var($data['email'], FILTER_VALIDATE_EMAIL)) {
-            $errors[] = 'Email is required and must be valid.';
+        // Validasi input
+        if (empty($id) || !is_numeric($id)) {
+            throw new \InvalidArgumentException("Invalid user ID.");
         }
 
-        if (empty($data['password']) || strlen($data['password'])) {
-            $errors[] = 'Password is required and must be valid.';
-        }
-
-        if (empty($data['phone'])) {
-            $errors[] = 'Phone number is required.';
-        }
-
-        return $errors;
-    }
-
-    public static function createUser($data)
-    {
-        $errors = self::validateUserData($data);
-        if (!empty($errors)) {
-            throw new \Exception(implode(", ", $errors));
-        }
-
-        $db = self::getConnection();
-        $stmt = $db->prepare("INSERT INTO user (email, password, phone) VALUES (:email, :password, :phone)");
-        $stmt->bindParam(':email', $data['email']);
-        $stmt->bindParam(':password', $data['password']);
-        $stmt->bindParam(':phone', $data['phone']);
-        return $stmt->execute();
-    }
-
-    public static function getAllUsers()
-    {
-        $db = self::getConnection();
-        $stmt = $db->query("SELECT * FROM user");
-        return $stmt->fetchAll();
-    }
-
-    public static function getUserById($id_user)
-    {
-        $db = self::getConnection();
-        $stmt = $db->prepare("SELECT * FROM user WHERE id_user = :id_user");
-        $stmt->bindParam(':id_user', $id_user, PDO::PARAM_INT);
+        $stmt = $this->db->prepare("SELECT id_user, email, phone FROM user WHERE id_user = :id_user");
+        $stmt->bindValue(':id_user', $id, PDO::PARAM_INT);
         $stmt->execute();
-        return $stmt->fetch();
+
+        return $stmt->fetch(PDO::FETCH_ASSOC);
     }
 
-    public static function updateUser($id_user, $data)
+    public function getAllUsers()
     {
-        $errors = self::validateUserData($data);
-        if (!empty($errors)) {
-            throw new \Exception(implode(", ", $errors));
+        $stmt = $this->db->query("SELECT id_user, email, phone FROM user");
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    public function createUser($email, $password, $phone)
+    {
+        // Validasi input
+        if (empty($email) || empty($password) || empty($phone)) {
+            throw new \InvalidArgumentException("Email, password, and phone are required.");
         }
 
-        $db = self::getConnection();
-        $stmt = $db->prepare("UPDATE user SET email = :email, password = :password, phone = :phone WHERE id_user = :id_user");
-        $stmt->bindParam(':id_user', $id_user, PDO::PARAM_INT);
-        $stmt->bindParam(':email', $data['email']);
-        $stmt->bindParam(':password', $data['password']);
-        $stmt->bindParam(':phone', $data['phone']);
-        return $stmt->execute();
+        $stmt = $this->db->prepare("INSERT INTO user (email, password, phone) VALUES (:email, :password, :phone)");
+        $stmt->bindValue(':email', $email, PDO::PARAM_STR);
+        $stmt->bindValue(':password', password_hash($password, PASSWORD_DEFAULT), PDO::PARAM_STR); // Hash password
+        $stmt->bindValue(':phone', $phone, PDO::PARAM_INT);
+        $stmt->execute();
+
+        return $this->db->lastInsertId();
     }
 
-    public static function deleteUser($id_user)
+    public function updateUser($id, $email, $phone)
     {
-        $db = self::getConnection();
-        $stmt = $db->prepare("DELETE FROM user WHERE id_user = :id_user");
-        $stmt->bindParam(':id_user', $id_user, PDO::PARAM_INT);
-        return $stmt->execute();
+        // Validasi input
+        if (empty($id) || !is_numeric($id)) {
+            throw new \InvalidArgumentException("Invalid user ID.");
+        }
+
+        $stmt = $this->db->prepare("UPDATE user SET email = :email, phone = :phone WHERE id_user = :id_user");
+        $stmt->bindValue(':id_user', $id, PDO::PARAM_INT);
+        $stmt->bindValue(':email', $email, PDO::PARAM_STR);
+        $stmt->bindValue(':phone', $phone, PDO::PARAM_INT);
+        $stmt->execute();
+
+        return $stmt->rowCount();
+    }
+
+    public function deleteUser($id)
+    {
+        // Validasi input
+        if (empty($id) || !is_numeric($id)) {
+            throw new \InvalidArgumentException("Invalid user ID.");
+        }
+
+        $stmt = $this->db->prepare("DELETE FROM user WHERE id_user = :id_user");
+        $stmt->bindValue(':id_user', $id, PDO::PARAM_INT);
+        $stmt->execute();
+
+        return $stmt->rowCount();
     }
 }
