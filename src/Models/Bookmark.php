@@ -1,5 +1,5 @@
 <?php
-
+//namespace
 namespace App\Models;
 
 use App\Services\Model;
@@ -14,12 +14,12 @@ class Bookmark extends Model
         return $model->getDB();
     }
 
-    public static function addBookmark($id_users, $id_jobs)
+    public static function addBookmark($id_user, $id_job)
     {
         try {
             $db = self::getConnection();
-            $stmt = $db->prepare("INSERT INTO bookmarks (id_users, id_jobs) VALUES (:id_users, :id_jobs)");
-            $stmt->execute(['id_users' => $id_users, 'id_jobs' => $id_jobs]);
+            $stmt = $db->prepare("INSERT INTO bookmark (id_user, id_job) VALUES (:id_user, :id_job)");
+            $stmt->execute(['id_user' => $id_user, 'id_job' => $id_job]);
             return ['success' => true, 'message' => 'Bookmark added successfully'];
         } catch (PDOException $e) {
             return ['success' => false, 'message' => $e->getMessage()];
@@ -30,7 +30,7 @@ class Bookmark extends Model
     {
         try {
             $db = self::getConnection();
-            $stmt = $db->prepare("DELETE FROM bookmarks WHERE id_bookmark = :id_bookmark");
+            $stmt = $db->prepare("DELETE FROM bookmark WHERE id_bookmark = :id_bookmark");
             $stmt->execute(['id_bookmark' => $id_bookmark]);
             return ['success' => true, 'message' => 'Bookmark removed successfully'];
         } catch (PDOException $e) {
@@ -38,15 +38,16 @@ class Bookmark extends Model
         }
     }
 
-    public static function viewBookmark($id_users)
+    public static function viewBookmark($id_bookmark)
     {
         try {
             $db = self::getConnection();
-            $stmt = $db->prepare("SELECT * FROM bookmarks WHERE id_users = :id_users");
-            $stmt->execute(['id_users' => $id_users]);
+            $stmt = $db->prepare("SELECT * FROM bookmark WHERE id_bookmark = :id_bookmark");
+            $stmt->execute(['id_bookmark' => $id_bookmark]);
             return $stmt->fetchAll(PDO::FETCH_ASSOC);
         } catch (PDOException $e) {
             return ['success' => false, 'message' => $e->getMessage()];
         }
     }
 }
+//S

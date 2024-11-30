@@ -225,11 +225,7 @@
                     "module": "Laminas\\Diactoros"
                 }
             },
-<<<<<<< HEAD
-            "installation-source": "source",
-=======
             "installation-source": "dist",
->>>>>>> a0b8507220f5b56b27d9b34d308e77e145c48310
             "autoload": {
                 "files": [
                     "src/functions/create_uploaded_file.php",
@@ -296,7 +292,7 @@
             },
             "time": "2018-02-13T20:26:39+00:00",
             "type": "library",
-            "installation-source": "source",
+            "installation-source": "dist",
             "autoload": {
                 "files": [
                     "src/functions.php"
@@ -501,7 +497,7 @@
                     "dev-master": "2.0.x-dev"
                 }
             },
-            "installation-source": "source",
+            "installation-source": "dist",
             "autoload": {
                 "psr-4": {
                     "Psr\\Container\\": "src/"
@@ -558,7 +554,7 @@
                     "dev-master": "1.0.x-dev"
                 }
             },
-            "installation-source": "source",
+            "installation-source": "dist",
             "autoload": {
                 "psr-4": {
                     "Psr\\Http\\Message\\": "src/"
@@ -615,7 +611,7 @@
                     "dev-master": "2.0.x-dev"
                 }
             },
-            "installation-source": "source",
+            "installation-source": "dist",
             "autoload": {
                 "psr-4": {
                     "Psr\\Http\\Message\\": "src/"
@@ -672,7 +668,7 @@
                     "dev-master": "1.0.x-dev"
                 }
             },
-            "installation-source": "source",
+            "installation-source": "dist",
             "autoload": {
                 "psr-4": {
                     "Psr\\Http\\Server\\": "src/"
@@ -732,7 +728,7 @@
                     "dev-master": "1.0.x-dev"
                 }
             },
-            "installation-source": "source",
+            "installation-source": "dist",
             "autoload": {
                 "psr-4": {
                     "Psr\\Http\\Server\\": "src/"
@@ -790,7 +786,7 @@
                     "dev-master": "3.x-dev"
                 }
             },
-            "installation-source": "source",
+            "installation-source": "dist",
             "autoload": {
                 "psr-4": {
                     "Psr\\Log\\": "src"
@@ -894,11 +890,7 @@
             },
             "time": "2023-09-09T13:01:07+00:00",
             "type": "library",
-<<<<<<< HEAD
-            "installation-source": "source",
-=======
             "installation-source": "dist",
->>>>>>> a0b8507220f5b56b27d9b34d308e77e145c48310
             "autoload": {
                 "psr-4": {
                     "Selective\\BasePath\\": "src/"
@@ -1058,7 +1050,7 @@
             },
             "time": "2024-06-13T08:54:48+00:00",
             "type": "library",
-            "installation-source": "source",
+            "installation-source": "dist",
             "autoload": {
                 "psr-4": {
                     "Slim\\": "Slim"

@@ -28,13 +28,14 @@ class CompanyReview extends Model
     {
         $db = self::getConnection();
         $stmt = $db->prepare("
-            INSERT INTO company_review (id_user, id_company, rating, review_text, job_position, employment_status, created_at, updated_at)
-            VALUES (:id_user, :id_company, :rating, :review_text, :job_position, :employment_status,  :created_at, :updated_at
-        ");
+        INSERT INTO company_review (id_user, id_company, rating, review_text, job_position, employment_status, created_at)
+        VALUES (:id_user, :id_company, :rating, :review_text, :job_position, :employment_status, :created_at)
+    ");
         return $stmt->execute($data);
     }
 
-    // Mengambil semua ulasan berdasarkan ID perusahaan
+
+    // Mengambil semua ulasan berdasarkan ID perusahaa
     public static function getReviewsByCompany($id_company)
     {
         $db = self::getConnection();
@@ -43,7 +44,7 @@ class CompanyReview extends Model
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
-    // Mengambil ulasan berdasarkan ID ulasan
+    // Mengambil ulasan berdasarkan ID ulasa
     public static function getReviewById($id_review)
     {
         $db = self::getConnection();

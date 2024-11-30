@@ -1,9 +1,32 @@
 {
-    "name": "ppbo2024",
+    "name": "jobstreet/ppbo2024",
     "description": "pemrograman berorientasi objek",
     "type": "project",
     "license": "MIT",
-    "authors": [],
+    "authors": [
+        {
+            "name": "fikry"
+        },
+        {
+            "name": "ferry"
+        },
+        {
+            "name": "fathurrochim"
+        },
+        {
+            "name": "dina"
+        },
+        {
+            "name": "gisel"
+        },
+        {
+            "name": "sachi"
+        },
+        {
+            "name": "alief"
+        }
+    ],
+
     "require": {
         "slim/slim": "^4.0",
         "slim/psr7": "^1.6",

@@ -1,26 +1,17 @@
 <?php
 
 use Slim\Factory\AppFactory;
-<<<<<<< HEAD
-use App\Controllers\UserController;
-=======
-use App\Controllers\UserController;  // Ubah dari src\Models\User menjadi App\Models\User
 
->>>>>>> a0b8507220f5b56b27d9b34d308e77e145c48310
+use App\Controllers\UserController;
 use App\Controllers\JobController;
-use App\Controllers\PageController;
+use App\Controllers\CompanyReviewController;
 use Selective\BasePath\BasePathMiddleware;
-use App\Controllers\SocialLinkController;
 use App\Controllers\ProfileController;
-use App\Controllers\LoginController;
-<<<<<<< HEAD
-use App\Controllers\CareerResourceController;
-use App\Controllers\ApplicationsController;
-=======
-use app\Controllers\CareerResourceController;
-use App\Controllers\ApplicationsController;
+use App\Controllers\NotificationController;
+use App\Controllers\ApplicationController;
 use App\Controllers\BookmarkController;
->>>>>>> a0b8507220f5b56b27d9b34d308e77e145c48310
+use App\Controllers\SearchCompanyController;
+
 
 require __DIR__ . '/../vendor/autoload.php';
 
@@ -34,63 +25,50 @@ $app->addRoutingMiddleware();
 // Middleware untuk menambahkan BasePath jika dibutuhkan
 $app->add(new BasePathMiddleware($app));
 
-// Error Middleware
+// Error Middlewar
 $app->addErrorMiddleware(true, true, true);
 
-// Endpoint untuk testing
-$app->get('/', function ($request, $response, $args) {
-    $data = ['message' => 'Testing aja boskuh'];
-    $response->getBody()->write(json_encode($data));
-    return $response->withHeader('Content-Type', 'application/json');
-});
 
-// Endpoint untuk jobs
-$app->get('/jobs', [JobController::class, 'getAllJobs']);
+$app->get('/notifications', [NotificationController::class, 'getAllNotifications']);
+$app->get('/notifications/{id}', [NotificationController::class, 'getNotificationById']);
+$app->post('/notifications', [NotificationController::class, 'createNotification']);
+$app->delete('/notifications/{id}', [NotificationController::class, 'deleteNotification']);
+
+$app->get('/company/search', [SearchCompanyController::class, 'searchCompany']);
+
+$app->get('/job', [JobController::class, 'getAllJobs']);
 $app->get('/job/{id}', [JobController::class, 'getJobById']);
 
-// Endpoint untuk users
-$app->get('/users', function ($request, $response, $args) {
-    return (new UserController())->getAllUsers($request, $response, $args);
-});
-$app->get('/user/{id}', function ($request, $response, $args) {
-    return (new UserController())->getUserById($request, $response, $args);
-});
-$app->post('/user', function ($request, $response, $args) {
-    return (new UserController())->createUser($request, $response, $args);
-});
-$app->put('/user/{id}', function ($request, $response, $args) {
-    return (new UserController())->updateUser($request, $response, $args);
-});
-$app->delete('/user/{id}', function ($request, $response, $args) {
-    return (new UserController())->deleteUser($request, $response, $args);
-});
+// Routes untuk CompanyRevieCR
+$app->post('/company-review', [CompanyReviewController::class, 'createReview']); // Tambah ulasan baru
+$app->get('/company-review/company/{id_company}', [CompanyReviewController::class, 'getReviewsByCompany']); // Ambil semua ulasan berdasarkan ID perusahaan
+$app->get('/company-review/{id_review}', [CompanyReviewController::class, 'getReviewById']); // Ambil ulasan berdasarkan ID ulasan
+$app->put('/company-review/{id_review}', [CompanyReviewController::class, 'updateReview']); // Perbarui ulasan berdasarkan ID ulasan
+$app->delete('/company-review/{id_review}', [CompanyReviewController::class, 'deleteReview']); // Hapus ulasan berdasarkan ID ulasan
 
+$app->post('/bookmark/add', [BookmarkController::class, 'addBookmark']);
+$app->delete('/bookmark/delete/{id}', [BookmarkController::class, 'removeBookmark']);
+$app->get('/bookmark/{id}', [BookmarkController::class, 'viewBookmark']);
 
-// End Point untuk social media
-$app->get('/social-links', [SocialLinkController::class, 'getAllSocialLinks']);
-$app->get('/social-link/{id}', [SocialLinkController::class, 'getSocialLinkById']); 
-$app->post('/social-link', [SocialLinkController::class, 'createSocialLink']); 
-$app->put('/social-link/{id}', [SocialLinkController::class, 'updateSocialLink']); 
-$app->delete('/social-link/{id}', [SocialLinkController::class, 'deleteSocialLink']); 
+$app->get('/users/{id}', [UserController::class, 'getUser']);
+$app->get('/users', [UserController::class, 'getAllUsers']);
+$app->post('/users', [UserController::class, 'createUser']);
+$app->put('/users/{id}', [UserController::class, 'updateUser']);
+$app->delete('/users/{id}', [UserController::class, 'deleteUser']);
 
-// End Point untuk profiles
 $app->get('/profiles', [ProfileController::class, 'getAllProfiles']);
-$app->get('/profile/{id}', [ProfileController::class, 'getProfileById']); 
-$app->post('/profile', [ProfileController::class, 'createProfile']); 
-$app->put('/profile/{id}', [ProfileController::class, 'updateProfile']); 
-$app->delete('/profile/{id}', [ProfileController::class, 'deleteProfile']); 
+$app->get('/profiles/{id}', [ProfileController::class, 'getProfileById']);
+$app->post('/profiles/add', [ProfileController::class, 'createProfile']);
+$app->put('/profiles/update/{id}', [ProfileController::class, 'updateProfile']);
+$app->delete('/profiles/delete/{id}', [ProfileController::class, 'deleteProfile']);
 
-// End Point untuk resources
-$app->get('/resources', [CareerResourceController::class, 'getAllResources']);
-$app->get('/resource/{id}', [CareerResourceController::class, 'getResourceById']); 
-$app->post('/resource', [CareerResourceController::class, 'createResource']); 
-$app->put('/resource/{id}', [CareerResourceController::class, 'updateResource']); 
-$app->delete('/resource/{id}', [CareerResourceController::class, 'deleteResource']); 
 
-// End Point unntuk application
-$app->post('/application/apply', [ApplicationsController::class, 'applyForJob']); 
-$app->get('/application/{id}/status', [ApplicationsController::class, 'trackApplicationStatus']); 
-$app->get('/applications/user/{id}', [ApplicationsController::class, 'getApplicationsByUser']); 
+
+$app->get('/application', [ApplicationController::class . ':getAllApplications']);
+$app->get('/application/{id}', [ApplicationController::class . ':getApplicationById']);
+$app->post('/application', [ApplicationController::class . ':createApplication']);
+$app->put('/application/{id}', [ApplicationController::class . ':updateApplicationStatus']);
+$app->delete('/application/{id}', [ApplicationController::class . ':deleteApplication']);
 
 // Jalankan aplikasi Slim
 $app->run();

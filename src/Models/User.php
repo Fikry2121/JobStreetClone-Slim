@@ -1,134 +1,87 @@
 <?php
-
-namespace App\Model;
+namespace App\Models;
 
 use PDO;
-<<<<<<< HEAD
-=======
 use App\Services\Model;
->>>>>>> a0b8507220f5b56b27d9b34d308e77e145c48310
 
-class User extends Model
+class User
 {
-    public $id;
-    public $email;
-    public $password;
-    public $user_location;
+    private $db;
 
-<<<<<<< HEAD
-    public function __construct(PDO $db)
+    public function __construct()
     {
-        $this->db = $db;
-=======
+        $this->db = self::getConnection();
+    }
+
     private static function getConnection()
     {
         $model = new Model();
         return $model->getDB();
->>>>>>> a0b8507220f5b56b27d9b34d308e77e145c48310
-    }
-
-    public static function validateUserData($data)
-    {
-<<<<<<< HEAD
-        $stmt = $this->db->query("SELECT * FROM user");
-        return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
     public function getUserById($id)
     {
-        $stmt = $this->db->prepare("SELECT * FROM user WHERE id = :id");
-        $stmt->execute(['id' => $id]);
+        // Validasi input
+        if (empty($id) || !is_numeric($id)) {
+            throw new \InvalidArgumentException("Invalid user ID.");
+        }
+
+        $stmt = $this->db->prepare("SELECT id_user, email, phone FROM user WHERE id_user = :id_user");
+        $stmt->bindValue(':id_user', $id, PDO::PARAM_INT);
+        $stmt->execute();
+
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
 
-    public function createUser($data)
+    public function getAllUsers()
     {
-        $stmt = $this->db->prepare("INSERT INTO user (name, email) VALUES (:name, :email)");
-        $stmt->execute(['name' => $data['name'], 'email' => $data['email']]);
-        return $this->getUserById($this->db->lastInsertId());
+        $stmt = $this->db->query("SELECT id_user, email, phone FROM user");
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
-    public function updateUser($id, $data)
+    public function createUser($email, $password, $phone)
     {
-        $stmt = $this->db->prepare("UPDATE user SET name = :name, email = :email WHERE id = :id");
-        $stmt->execute(['name' => $data['name'], 'email' => $data['email'], 'id' => $id]);
-        return $this->getUserById($id);
-=======
-        $errors = [];
-
-        if (empty($data['email']) || !filter_var($data['email'], FILTER_VALIDATE_EMAIL)) {
-            $errors[] = 'Email is required and must be valid.';
+        // Validasi input
+        if (empty($email) || empty($password) || empty($phone)) {
+            throw new \InvalidArgumentException("Email, password, and phone are required.");
         }
 
-        if (empty($data['password']) || strlen($data['password']) < 8) {
-            $errors[] = 'Password is required and must be at least 8 characters.';
-        }
-
-        if (empty($data['user_location'])) {
-            $errors[] = 'User location is required.';
-        }
-
-        return $errors;
-    }
-
-    public static function createUser($data)
-    {
-        $errors = self::validateUserData($data);
-        if (!empty($errors)) {
-            throw new \Exception(implode(", ", $errors));
-        }
-
-        $db = self::getConnection();
-        $stmt = $db->prepare("INSERT INTO user (email, password, user_location) VALUES (:email, :password, :user_location)");
-        $stmt->bindParam(':email', $data['email']);
-        $stmt->bindParam(':password', password_hash($data['password'], PASSWORD_DEFAULT));
-        $stmt->bindParam(':user_location', $data['user_location']);
-        return $stmt->execute();
-    }
-
-    public static function getAllUsers()
-    {
-        $db = self::getConnection();
-        $stmt = $db->query("SELECT * FROM user");
-        return $stmt->fetchAll();
-    }
-
-    public static function getUserById($id)
-    {
-        $db = self::getConnection();
-        $stmt = $db->prepare("SELECT * FROM user WHERE id = :id");
-        $stmt->bindParam(':id', $id, PDO::PARAM_INT);
+        $stmt = $this->db->prepare("INSERT INTO user (email, password, phone) VALUES (:email, :password, :phone)");
+        $stmt->bindValue(':email', $email, PDO::PARAM_STR);
+        $stmt->bindValue(':password', password_hash($password, PASSWORD_DEFAULT), PDO::PARAM_STR); // Hash password
+        $stmt->bindValue(':phone', $phone, PDO::PARAM_INT);
         $stmt->execute();
-        return $stmt->fetch();
+
+        return $this->db->lastInsertId();
     }
 
-    public static function updateUser($id, $data)
+    public function updateUser($id, $email, $phone)
     {
-        $errors = self::validateUserData($data);
-        if (!empty($errors)) {
-            throw new \Exception(implode(", ", $errors));
+        // Validasi input
+        if (empty($id) || !is_numeric($id)) {
+            throw new \InvalidArgumentException("Invalid user ID.");
         }
 
-        $db = self::getConnection();
-        $stmt = $db->prepare("UPDATE user SET email = :email, password = :password, user_location = :user_location WHERE id = :id");
-        $stmt->bindParam(':id', $id, PDO::PARAM_INT);
-        $stmt->bindParam(':email', $data['email']);
-        $stmt->bindParam(':password', password_hash($data['password'], PASSWORD_DEFAULT));
-        $stmt->bindParam(':user_location', $data['user_location']);
-        return $stmt->execute();
->>>>>>> a0b8507220f5b56b27d9b34d308e77e145c48310
+        $stmt = $this->db->prepare("UPDATE user SET email = :email, phone = :phone WHERE id_user = :id_user");
+        $stmt->bindValue(':id_user', $id, PDO::PARAM_INT);
+        $stmt->bindValue(':email', $email, PDO::PARAM_STR);
+        $stmt->bindValue(':phone', $phone, PDO::PARAM_INT);
+        $stmt->execute();
+
+        return $stmt->rowCount();
     }
 
-    public static function deleteUser($id)
+    public function deleteUser($id)
     {
-<<<<<<< HEAD
-        $stmt = $this->db->prepare("DELETE FROM user WHERE id = :id");
-        return $stmt->execute(['id' => $id]);
-=======
-        $db = self::getConnection();
-        $stmt = $db->prepare("DELETE FROM user WHERE id = :id");
-        $stmt->bindParam(':id', $id, PDO::PARAM_INT);
-        return $stmt->execute();
->>>>>>> a0b8507220f5b56b27d9b34d308e77e145c48310
+        // Validasi input
+        if (empty($id) || !is_numeric($id)) {
+            throw new \InvalidArgumentException("Invalid user ID.");
+        }
+
+        $stmt = $this->db->prepare("DELETE FROM user WHERE id_user = :id_user");
+        $stmt->bindValue(':id_user', $id, PDO::PARAM_INT);
+        $stmt->execute();
+
+        return $stmt->rowCount();
     }
 }

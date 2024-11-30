@@ -1,15 +1,9 @@
 <?php return array(
     'root' => array(
-        'name' => 'nursugianto1001/ppbo2024',
-<<<<<<< HEAD
+        'name' => 'jobstreet/ppbo2024',
         'pretty_version' => 'dev-main',
         'version' => 'dev-main',
-        'reference' => 'ddb15f4cdb935bee4a0bdef09e746d8307523015',
-=======
-        'pretty_version' => '1.0.0+no-version-set',
-        'version' => '1.0.0.0',
-        'reference' => null,
->>>>>>> a0b8507220f5b56b27d9b34d308e77e145c48310
+        'reference' => 'cae19868a93d3e1285436b6b05e6188089addb8e',
         'type' => 'project',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -34,6 +28,15 @@
             'aliases' => array(),
             'dev_requirement' => false,
         ),
+        'jobstreet/ppbo2024' => array(
+            'pretty_version' => 'dev-main',
+            'version' => 'dev-main',
+            'reference' => 'cae19868a93d3e1285436b6b05e6188089addb8e',
+            'type' => 'project',
+            'install_path' => __DIR__ . '/../../',
+            'aliases' => array(),
+            'dev_requirement' => false,
+        ),
         'laminas/laminas-diactoros' => array(
             'pretty_version' => '3.5.0',
             'version' => '3.5.0.0',
@@ -49,21 +52,6 @@
             'reference' => '181d480e08d9476e61381e04a71b34dc0432e812',
             'type' => 'library',
             'install_path' => __DIR__ . '/../nikic/fast-route',
-            'aliases' => array(),
-            'dev_requirement' => false,
-        ),
-        'nursugianto1001/ppbo2024' => array(
-<<<<<<< HEAD
-            'pretty_version' => 'dev-main',
-            'version' => 'dev-main',
-            'reference' => 'ddb15f4cdb935bee4a0bdef09e746d8307523015',
-=======
-            'pretty_version' => '1.0.0+no-version-set',
-            'version' => '1.0.0.0',
-            'reference' => null,
->>>>>>> a0b8507220f5b56b27d9b34d308e77e145c48310
-            'type' => 'project',
-            'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
             'dev_requirement' => false,
         ),
@@ -129,13 +117,8 @@
             'dev_requirement' => false,
             'provided' => array(
                 0 => '1.0',
-<<<<<<< HEAD
-                1 => '^1.0 || ^2.0',
-                2 => '^1.1 || ^2.0',
-=======
                 1 => '^1.1 || ^2.0',
                 2 => '^1.0 || ^2.0',
->>>>>>> a0b8507220f5b56b27d9b34d308e77e145c48310
             ),
         ),
         'psr/http-server-handler' => array(

@@ -8,7 +8,7 @@ use App\Models\CompanyReview;
 
 class CompanyReviewController
 {
-    // Menambahkan ulasan baru
+    // Menambahkan ulasan bar
     public function createReview(Request $request, Response $response)
     {
         $data = $request->getParsedBody();
@@ -23,6 +23,7 @@ class CompanyReviewController
             'created_at' => $data['created_at']
 
         ]);
+        //d
 
         if ($result) {
             $response->getBody()->write(json_encode(['status' => 'success', 'message' => 'Review created successfully']));
@@ -33,7 +34,7 @@ class CompanyReviewController
         return $response->withHeader('Content-Type', 'application/json');
     }
 
-    // Mengambil semua ulasan berdasarkan ID perusahaan
+    // Mengambil semua ulasan berdasarkan ID perusahaa
     public function getReviewsByCompany(Request $request, Response $response, $args)
     {
         $id_company = $args['id_company'];
