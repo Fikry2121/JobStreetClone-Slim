@@ -8,7 +8,7 @@ use App\Controllers\CompanyReviewController;
 use Selective\BasePath\BasePathMiddleware;
 use App\Controllers\SocialLinkController;
 use App\Controllers\ProfileController;
-use App\Controllers\LoginController;
+use App\Controllers\CompanyController;
 
 use App\Controllers\ApplicationController;
 
@@ -47,14 +47,9 @@ $app->get('/users/{id}', [UserController::class, 'getUserById']);
 $app->put('/users/{id}', [UserController::class, 'updateUser']);
 $app->delete('/users/{id}', [UserController::class, 'deleteUser']);
 
+$app->get('/companies/search', [CompanyController::class, 'searchCompanyByName']);
 
 
-// Rute untuk mendapatkan semua social link
-$app->get('/social-links', [SocialLinkController::class, 'getAllSocialLinks']);
-$app->get('/social-links/{id}', [SocialLinkController::class, 'getSocialLinkById']);
-$app->post('/social-links/add', [SocialLinkController::class, 'createSocialLink']);
-$app->put('/social-links/update/{id}', [SocialLinkController::class, 'updateSocialLink']);
-$app->delete('/social-links/delete/{id}', [SocialLinkController::class, 'deleteSocialLink']);
 
 $app->get('/profiles', [ProfileController::class, 'getAllProfiles']);
 $app->get('/profiles/{id}', [ProfileController::class, 'getProfileById']);
