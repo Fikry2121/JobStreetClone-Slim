@@ -25,7 +25,7 @@ $app->addRoutingMiddleware();
 // Middleware untuk menambahkan BasePath jika dibutuhkan
 $app->add(new BasePathMiddleware($app));
 
-// Error Middleware
+// Error Middlewar
 $app->addErrorMiddleware(true, true, true);
 
 

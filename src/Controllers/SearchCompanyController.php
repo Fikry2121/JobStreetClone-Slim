@@ -21,7 +21,7 @@ class SearchCompanyController
         $queryParams = $request->getQueryParams();
         $company_name = $queryParams['name'] ?? '';
 
-        // Memanggil metode untuk mendapatkan perusahaan berdasarkan nam
+        // Memanggil metode untuk mendapatkan perusahaan berdasarkan na
         $company = $this->companyModel->getCompanyByName($company_name);
 
         // Mengatur header untuk respons JSON
