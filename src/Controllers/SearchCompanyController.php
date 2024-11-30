@@ -24,7 +24,7 @@ class SearchCompanyController
         // Memanggil metode untuk mendapatkan perusahaan berdasarkan na
         $company = $this->companyModel->getCompanyByName($company_name);
 
-        // Mengatur header untuk respons JSON
+        // Mengatur header untuk respons JSO
         $response = $response->withHeader('Content-Type', 'application/json');
 
         // Mengonversi hasil pencarian ke JSON dan menulis ke body respon

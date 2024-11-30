@@ -39,7 +39,7 @@ $app->get('/company/search', [SearchCompanyController::class, 'searchCompany']);
 $app->get('/job', [JobController::class, 'getAllJobs']);
 $app->get('/job/{id}', [JobController::class, 'getJobById']);
 
-// Routes untuk CompanyRevieCRU
+// Routes untuk CompanyRevieCR
 $app->post('/company-review', [CompanyReviewController::class, 'createReview']); // Tambah ulasan baru
 $app->get('/company-review/company/{id_company}', [CompanyReviewController::class, 'getReviewsByCompany']); // Ambil semua ulasan berdasarkan ID perusahaan
 $app->get('/company-review/{id_review}', [CompanyReviewController::class, 'getReviewById']); // Ambil ulasan berdasarkan ID ulasan

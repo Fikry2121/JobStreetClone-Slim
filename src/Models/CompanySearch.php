@@ -19,7 +19,7 @@ class CompanySearch
         $model = new Model();
         return $model->getDB();
     }
-    //K
+    //ll
     public function getCompanyByName($company_name)
     {
 
