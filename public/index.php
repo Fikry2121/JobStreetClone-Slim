@@ -9,7 +9,7 @@ use Selective\BasePath\BasePathMiddleware;
 use App\Controllers\SocialLinkController;
 use App\Controllers\ProfileController;
 use App\Controllers\LoginController;
-use app\Controllers\CareerResourceController;
+
 use App\Controllers\ApplicationController;
 
 require __DIR__ . '/../vendor/autoload.php';
@@ -62,11 +62,7 @@ $app->post('/profiles/add', [ProfileController::class, 'createProfile']);
 $app->put('/profiles/update/{id}', [ProfileController::class, 'updateProfile']);
 $app->delete('/profiles/delete/{id}', [ProfileController::class, 'deleteProfile']);
 
-$app->get('/resources', [CareerResourceController::class, 'getAllResources']);
-$app->get('/resources/{id}', [CareerResourceController::class, 'getResourceById']);
-$app->post('/resources', [CareerResourceController::class, 'createResource']);
-$app->put('/resources/{id}', [CareerResourceController::class, 'updateResource']);
-$app->delete('/resources/{id}', [CareerResourceController::class, 'deleteResource']);
+
 
 $app->get('/application', \App\Controllers\ApplicationController::class . ':getAllApplications');
 $app->get('/application/{id}', \App\Controllers\ApplicationController::class . ':getApplicationById');
