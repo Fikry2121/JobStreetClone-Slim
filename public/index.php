@@ -9,6 +9,7 @@ use Selective\BasePath\BasePathMiddleware;
 use App\Controllers\ProfileController;
 use App\Controllers\NotificationController;
 use App\Controllers\ApplicationController;
+use App\Controllers\BookmarkController;
 
 require __DIR__ . '/../vendor/autoload.php';
 
@@ -42,6 +43,9 @@ $app->get('/company-review/{id_review}', [CompanyReviewController::class, 'getRe
 $app->put('/company-review/{id_review}', [CompanyReviewController::class, 'updateReview']); // Perbarui ulasan berdasarkan ID ulasan
 $app->delete('/company-review/{id_review}', [CompanyReviewController::class, 'deleteReview']); // Hapus ulasan berdasarkan ID ulasan
 
+$app->post('/bookmark/add', [BookmarkController::class, 'addBookmark']);
+$app->delete('/bookmark/delete/{id}', [BookmarkController::class, 'removeBookmark']);
+$app->get('/bookmark/{id}', [BookmarkController::class, 'viewBookmark']);
 
 $app->get('/users/{id}', [UserController::class, 'getUser']);
 $app->get('/users', [UserController::class, 'getAllUsers']);
