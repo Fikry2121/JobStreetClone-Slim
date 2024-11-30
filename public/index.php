@@ -10,7 +10,7 @@ use App\Controllers\SocialLinkController;
 use App\Controllers\ProfileController;
 use App\Controllers\LoginController;
 use app\Controllers\CareerResourceController;
-use App\Controllers\ApplicationsController;
+use App\Controllers\ApplicationController;
 
 require __DIR__ . '/../vendor/autoload.php';
 
@@ -65,9 +65,11 @@ $app->post('/resources', [CareerResourceController::class, 'createResource']);
 $app->put('/resources/{id}', [CareerResourceController::class, 'updateResource']);
 $app->delete('/resources/{id}', [CareerResourceController::class, 'deleteResource']);
 
-$app->post('/applications/apply', [ApplicationsController::class, 'applyForJob']);
-$app->get('/applications/{id}/status', [ApplicationsController::class, 'trackApplicationStatus']);
-$app->get('/applications/user/{id}', [ApplicationsController::class, 'getApplicationsByUser']);
+$app->get('/application', \App\Controllers\ApplicationController::class . ':getAllApplications');
+$app->get('/application/{id}', \App\Controllers\ApplicationController::class . ':getApplicationById');
+$app->post('/application', \App\Controllers\ApplicationController::class . ':createApplication');
+$app->put('/application/{id}', \App\Controllers\ApplicationController::class . ':updateApplicationStatus');
+$app->delete('/application/{id}', \App\Controllers\ApplicationController::class . ':deleteApplication');
 
 // Jalankan aplikasi Slim
 $app->run();
