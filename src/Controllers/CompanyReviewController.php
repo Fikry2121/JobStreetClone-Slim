@@ -34,7 +34,7 @@ class CompanyReviewController
         return $response->withHeader('Content-Type', 'application/json');
     }
 
-    // Mengambil semua ulasan berdasarkan ID perusahaan
+    // Mengambil semua ulasan berdasarkan ID perusahaa
     public function getReviewsByCompany(Request $request, Response $response, $args)
     {
         $id_company = $args['id_company'];

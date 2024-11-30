@@ -3,7 +3,7 @@
         'name' => 'nursugianto1001/ppbo2024',
         'pretty_version' => 'dev-main',
         'version' => 'dev-main',
-        'reference' => '4fc883eeb7a1220c614ae3c0b82559fdc46fefc3',
+        'reference' => '6ab84f8922d7a59ef99d74dafd8ed553db6de32b',
         'type' => 'project',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -49,7 +49,7 @@
         'nursugianto1001/ppbo2024' => array(
             'pretty_version' => 'dev-main',
             'version' => 'dev-main',
-            'reference' => '4fc883eeb7a1220c614ae3c0b82559fdc46fefc3',
+            'reference' => '6ab84f8922d7a59ef99d74dafd8ed553db6de32b',
             'type' => 'project',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
