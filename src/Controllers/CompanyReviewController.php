@@ -8,7 +8,7 @@ use App\Models\CompanyReview;
 
 class CompanyReviewController
 {
-    // Menambahkan ulasan baru
+    // Menambahkan ulasan bar
     public function createReview(Request $request, Response $response)
     {
         $data = $request->getParsedBody();

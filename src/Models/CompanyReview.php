@@ -44,7 +44,7 @@ class CompanyReview extends Model
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
-    // Mengambil ulasan berdasarkan ID ulasan
+    // Mengambil ulasan berdasarkan ID ulasa
     public static function getReviewById($id_review)
     {
         $db = self::getConnection();
