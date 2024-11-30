@@ -40,7 +40,7 @@ class BookmarkController
         return $response->withHeader('Content-Type', 'application/json');
     }
 
-    // Melihat semua bookmark milik pengguna tertentu
+    // Melihat semua bookmark milik pengguna tertent
     public function viewBookmark(Request $request, Response $response, array $args)
     {
         $id_bookmark = $args['id'] ?? null;

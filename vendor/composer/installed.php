@@ -1,9 +1,9 @@
 <?php return array(
     'root' => array(
-        'name' => 'nursugianto1001/ppbo2024',
+        'name' => 'jobstreet/ppbo2024',
         'pretty_version' => 'dev-main',
         'version' => 'dev-main',
-        'reference' => '6ab84f8922d7a59ef99d74dafd8ed553db6de32b',
+        'reference' => 'cae19868a93d3e1285436b6b05e6188089addb8e',
         'type' => 'project',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -28,6 +28,15 @@
             'aliases' => array(),
             'dev_requirement' => false,
         ),
+        'jobstreet/ppbo2024' => array(
+            'pretty_version' => 'dev-main',
+            'version' => 'dev-main',
+            'reference' => 'cae19868a93d3e1285436b6b05e6188089addb8e',
+            'type' => 'project',
+            'install_path' => __DIR__ . '/../../',
+            'aliases' => array(),
+            'dev_requirement' => false,
+        ),
         'laminas/laminas-diactoros' => array(
             'pretty_version' => '3.5.0',
             'version' => '3.5.0.0',
@@ -43,15 +52,6 @@
             'reference' => '181d480e08d9476e61381e04a71b34dc0432e812',
             'type' => 'library',
             'install_path' => __DIR__ . '/../nikic/fast-route',
-            'aliases' => array(),
-            'dev_requirement' => false,
-        ),
-        'nursugianto1001/ppbo2024' => array(
-            'pretty_version' => 'dev-main',
-            'version' => 'dev-main',
-            'reference' => '6ab84f8922d7a59ef99d74dafd8ed553db6de32b',
-            'type' => 'project',
-            'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
             'dev_requirement' => false,
         ),
