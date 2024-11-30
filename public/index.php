@@ -41,11 +41,13 @@ $app->put('/company-review/{id_review}', [CompanyReviewController::class, 'updat
 $app->delete('/company-review/{id_review}', [CompanyReviewController::class, 'deleteReview']); // Hapus ulasan berdasarkan ID ulasan
 
 
-$app->post('/users', [UserController::class, 'createUser']);
+$app->post('/users/add', [UserController::class, 'createUser']);
 $app->get('/users', [UserController::class, 'getAllUsers']);
 $app->get('/users/{id}', [UserController::class, 'getUserById']);
 $app->put('/users/{id}', [UserController::class, 'updateUser']);
 $app->delete('/users/{id}', [UserController::class, 'deleteUser']);
+
+
 
 // Rute untuk mendapatkan semua social link
 $app->get('/social-links', [SocialLinkController::class, 'getAllSocialLinks']);

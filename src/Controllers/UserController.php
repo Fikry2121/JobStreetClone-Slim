@@ -12,7 +12,7 @@ class UserController
         try {
             $data = json_decode($request->getBody(), true);
             User::createUser($data);
-            return ['status' => 'success', 'message' => 'User created successfull.'];
+            return ['status' => 'success', 'message' => 'User created successfully.'];
         } catch (Exception $e) {
             return ['status' => 'error', 'message' => $e->getMessage()];
         }
@@ -24,33 +24,36 @@ class UserController
         return ['status' => 'success', 'data' => $users];
     }
 
-    public function getUserById($id)
+    public function getUserById($request, $response, $args)
     {
+        $id = $args['id']; // Mengambil ID dari args
         $user = User::getUserById($id);
         if ($user) {
-            return ['status' => 'success', 'data' => $user];
+            return $response->withJson(['status' => 'success', 'data' => $user], 200);
         } else {
-            return ['status' => 'error', 'message' => 'User not found.'];
+            return $response->withJson(['status' => 'error', 'message' => 'User not found.'], 404);
         }
     }
 
-    public function updateUser($request, $id)
+    public function updateUser($request, $response, $args)
     {
+        $id = $args['id']; // Mengambil ID dari args
         try {
             $data = json_decode($request->getBody(), true);
             User::updateUser($id, $data);
-            return ['status' => 'success', 'message' => 'User updated successfully.'];
+            return $response->withJson(['status' => 'success', 'message' => 'User updated successfully.'], 200);
         } catch (Exception $e) {
-            return ['status' => 'error', 'message' => $e->getMessage()];
+            return $response->withJson(['status' => 'error', 'message' => $e->getMessage()], 500);
         }
     }
 
-    public function deleteUser($id)
+    public function deleteUser($request, $response, $args)
     {
+        $id = $args['id']; // Mengambil ID dari args
         if (User::deleteUser($id)) {
-            return ['status' => 'success', 'message' => 'User deleted successfully.'];
+            return $response->withJson(['status' => 'success', 'message' => 'User deleted successfully.'], 200);
         } else {
-            return ['status' => 'error', 'message' => 'Failed to delete user.'];
+            return $response->withJson(['status' => 'error', 'message' => 'Failed to delete user.'], 500);
         }
     }
 }
