@@ -11,7 +11,7 @@ use App\Controllers\NotificationController;
 use App\Controllers\ApplicationController;
 use App\Controllers\BookmarkController;
 use App\Controllers\SearchCompanyController;
-
+use App\Controllers\CompanyController;
 
 require __DIR__ . '/../vendor/autoload.php';
 
@@ -70,5 +70,6 @@ $app->post('/application', [ApplicationController::class . ':createApplication']
 $app->put('/application/{id}', [ApplicationController::class . ':updateApplicationStatus']);
 $app->delete('/application/{id}', [ApplicationController::class . ':deleteApplication']);
 
-// Jalankan aplikasi Slim
+$app->get('/companies', [CompanyController::class, 'getAllCompanies']); 
+$app->get('/companies/{id_company}', [CompanyController::class, 'getCompanyById']); 
 $app->run();
